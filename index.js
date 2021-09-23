@@ -2,30 +2,16 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-var readline = require('readline');
+
 var dateTime = new Date();
 
-
-var leitor = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-var res = "";
-
-var chamados = [
-
-]
 
 io.on('connection', (socket) => { 
 
     console.log(socket.id);
 
-    socket.on("enterpriseInformation", (data) => {
-        console.log(socket.id);
-        console.log(data.enterpriseID);
-        chamados.map((e) => {
-            if(e.id = data.idCall) return e.status = "Ativo";
-        })
+    socket.on("information", (data) => {
+        
     })
 
     socket.on("sender", (data) => {
