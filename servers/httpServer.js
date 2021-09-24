@@ -1,14 +1,15 @@
-const express = require('express');
-const app = express();
-const server = require('http').createServer(app);
+exports.createServer = (http, express) => {
+    
+    const app = express();
+    const server = http.createServer(app);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+    const port = process.env.port || 3000;
 
-const port = process.env.port || 3000;
+    server.listen(port, '10.0.0.104', () => {
+        console.log("CONNECTION OPEN");
+    });
 
-server.listen(port, '10.0.0.104', () => {
-    console.log("CONNECTION OPEN");
-});
+    return { server, app }
+}
 
-module.exports = server;
+
