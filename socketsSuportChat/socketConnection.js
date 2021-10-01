@@ -1,38 +1,47 @@
 const Type = require("./enums/typesChat");
-const controllerEnterprise = require("./enterprises/socketEnterprise_controller")();
-const controllerSuport = require("./suports/socketSuport_controller")();
+const controller = require("./enterprises/socketEnterprise_controller")();
 
 chatSuport = (io) => {
     io.of("/suport").on("connection", (socket) => {
+        console.log(socket.id)
+        socket.on("message", async (data) => {
 
-        socket.on("message", (data) => {
-            if(data.type == Type.ENTERPRISE.id){
-
-            } else if(data.type == Type.SUPORT.id){
-
-            } else {
-
+            const rooms = await io.of("/suport").in(data.idCall).fetchSockets();
+            let message;
+            if (data.type == Type.ENTERPRISE.id) {
+                message = {
+                    idUser: data.idUser,
+                    codeEnterprise: data.codeEnterprise,
+                    idCall: data.idCall,
+                    message: data.message,
+                }
+            } else if (data.type == Type.SUPORT.id) {
+                message = {
+                    idUser: data.idUser,
+                    idCall: data.idCall,
+                    message: data.message,
+                }
             }
+            socket.join(message.idCall);
+            controller.insertMessage(message);
+            sendMessage(message);
         });
 
         socket.on("auth", (data) => {
-    
-            if(data.type == Type.ENTERPRISE.id){
-                const model = {
+            let model;
+            if (data.type == Type.ENTERPRISE.id) {
+                model = {
                     codeEnterprise: data.idEnterprise,
-                    userId: data.idUser,
+                    idUser: data.idUser,
                     socketID: socket.id
                 }
-                controllerEnterprise.createAuthSocket(model);
-            } else if(data.type == Type.SUPORT.id){
-                const model = {
-                    userId: data.idUser,
+            } else if (data.type == Type.SUPORT.id) {
+                model = {
+                    isUser: data.idUser,
                     socketID: socket.id
                 }
-                controllerSuport.createAuthSocket(model);
-            } else {
-                
             }
+            controller.createAuthSocket(model);
         });
 
 
