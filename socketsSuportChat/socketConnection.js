@@ -15,6 +15,7 @@ chatSuport = (io) => {
                     codeEnterprise: data.codeEnterprise,
                     idCall: data.idCall,
                     message: data.message,
+                    socketId: socket.id
                 }
             } else if (data.type == Type.SUPORT.id) {
                 message = {
@@ -22,6 +23,7 @@ chatSuport = (io) => {
                     idUser: data.idUser,
                     idCall: data.idCall,
                     message: data.message,
+                    socketId: socket.id
                 }
             }
             socket.join(message.idCall);
@@ -36,13 +38,13 @@ chatSuport = (io) => {
                     type: Type.ENTERPRISE,
                     codeEnterprise: data.idEnterprise,
                     idUser: data.idUser,
-                    socketID: socket.id
+                    socketId: socket.id
                 }
             } else if (data.type == Type.SUPORT.id) {
                 model = {
                     type: Type.SUPORT,
                     isUser: data.idUser,
-                    socketID: socket.id
+                    socketId: socket.id
                 }
             }
             controller.createAuthSocket(model);
