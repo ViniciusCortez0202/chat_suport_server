@@ -23,7 +23,6 @@ class Subject{
     }
 
     notifyAll(){
-        console.log(this.#observers.length)
         this.#observers.forEach(observer => {
             observer.update(this.#value);
         });

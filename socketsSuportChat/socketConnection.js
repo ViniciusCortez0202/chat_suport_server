@@ -1,5 +1,5 @@
 const Type = require("./enums/typesChat");
-const controller = require("./enterprises/socketEnterprise_controller")();
+const controller = require("./socket_controller")();
 
 chatSuport = (io) => {
     io.of("/suport").on("connection", (socket) => {
@@ -28,7 +28,7 @@ chatSuport = (io) => {
             }
             socket.join(message.idCall);
             controller.insertMessage(message);
-            controller.sendMessage(message);
+            controller.sendMessage(message, io);
         });
 
         socket.on("auth", (data) => {
