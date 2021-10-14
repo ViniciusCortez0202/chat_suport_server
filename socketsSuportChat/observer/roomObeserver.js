@@ -1,4 +1,4 @@
-const Messages = require("../socketMessageRepository")();
+const Messages = require("../repositories/socketMessageRepository")();
 
 class RoomObserver{
     #subjetc;
