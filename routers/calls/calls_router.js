@@ -5,6 +5,12 @@ calls = (router) => {
         response.end();
     });
 
+    router.get('/all:idUser', (require, response) => {
+        response.status(200).json(
+            {}, {}, {},
+        );
+    });
+
     router.patch('/close', (require, response) => {
 
     });

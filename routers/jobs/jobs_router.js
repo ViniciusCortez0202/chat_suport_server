@@ -5,6 +5,10 @@ jobs = (router) => {
         response.end();
     });
 
+    router.get('/all', (require, response) => {
+
+    });
+
     router.post('/hire', (require, response) => {
 
     });
