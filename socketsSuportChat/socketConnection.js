@@ -1,4 +1,4 @@
-const Type = require("./enums/typesChat");
+const Type = require("../enums/typesChat");
 const socketController = require("./socket_controller");
 
 chatSuport = (io) => {
