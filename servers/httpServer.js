@@ -13,7 +13,7 @@ exports.createServer = (http, express) => {
     app.use(express.json())
     app.use(express.urlencoded({ extended: true}))
 
-    routersManagement(app, express.Router());
+    routersManagement(app, express);
 
     return { server, app }
 }
