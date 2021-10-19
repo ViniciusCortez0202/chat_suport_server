@@ -1,6 +1,6 @@
 const Status = Object.freeze({
     OPEN:   { name: "Aberto", color: "" },
-    ACTIVATE:  { name: "Aberto", color: "" },
+    ACTIVATE:  { name: "Ativo", color: "" },
     CLOSE: {name: "Fechado", color: ""}
   });
 
