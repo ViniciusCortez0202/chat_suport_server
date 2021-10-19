@@ -4,7 +4,9 @@ calls = (router) => {
 
     router.post('/open', (require, response) => {
         console.log(require.body);
-        response.end();
+        
+        response.set('Location', `http://10.0.0.104/calls?callid=545&token=${require.body.token}`);
+        response.status(201).end();
     });
 
     router.get('/all', (require, response) => {
@@ -17,6 +19,27 @@ calls = (router) => {
                 description: 'ao emitir uma nota tentei imprimir mas deu falha',
                 imgs: [],
                 status: Status.ACTIVATE.name,
+                date_open: '14/10/2021',
+                client: {
+                    name: 'Vinicis',
+                    idClient: '123',
+                    profilePicture: 'https://i0.wp.com/totalip.com.br/wp-content/uploads/2018/02/profissao-atendente-de-call-center-face.jpg?fit=1200%2C628&ssl=1',
+                },
+                suport: {
+                    name: 'cortez',
+                    idSuport: '321',
+                    profilePicture: 'https://i0.wp.com/totalip.com.br/wp-content/uploads/2018/02/profissao-atendente-de-call-center-face.jpg?fit=1200%2C628&ssl=1',
+                },
+                date_close: ''
+            },
+            {
+                token: 'fd5v468498f46',
+                idCall: '001',
+                title: 'Sistema não abre',
+                job: 'Arpa',
+                description: 'ao emitir uma nota tentei imprimir mas deu falha',
+                imgs: [],
+                status: Status.CLOSE.name,
                 date_open: '14/10/2021',
                 client: {
                     name: 'Vinicis',
