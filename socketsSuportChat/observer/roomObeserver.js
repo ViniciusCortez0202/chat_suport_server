@@ -12,8 +12,9 @@ class RoomObserver{
         this.#subjetc.attachObserver(this);
     }
 
-    update = (value) => {
-        this.#io.of('/suport').in(this.#room).emit("message", Messages.getAllMessagesNotRead());
+    update = async () => {
+        const messages = await Messages.getAllMessages(this.#room);
+        this.#io.of('/suport').in(this.#room).emit("message", messages.message);
     }
 }
 module.exports = RoomObserver;

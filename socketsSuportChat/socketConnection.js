@@ -12,7 +12,7 @@ chatSuport = (io) => {
         //Change to handshake.query because version socket
         authentication(socket.handshake.query, socket.conn.id);
         //console.log(socket.conn.id)
-        socket.on("message", async (data) => {
+        socket.on("message", (data) => {
 
             //const rooms = await io.of("/suport").in(data.idCall).fetchSockets();
             let message;

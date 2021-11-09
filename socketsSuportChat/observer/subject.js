@@ -1,6 +1,6 @@
 class Subject{
-    #value = [];
-    #observers = [];
+    #value = new Set();
+    #observers;
 
     setValue(value){
         this.#value.push(value);
@@ -23,9 +23,7 @@ class Subject{
     }
 
     notifyAll(){
-        this.#observers.forEach(observer => {
-            observer.update(this.#value);
-        });
+        this.#observers.update(this.#value);
     }
 }
 

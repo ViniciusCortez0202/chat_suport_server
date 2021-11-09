@@ -6,8 +6,8 @@ jobs = (router) => {
             name: "Arpa",
             isHire: true,
             dateHire: '30/06/2022',
-            description: '',
-            cost: '',
+            description: 'SIstema ERP',
+            cost: 'a combinar',
 
         },
         {
@@ -15,30 +15,24 @@ jobs = (router) => {
             name: "Infra",
             isHire: false,
             dateHire: '',
-            description: '',
-            cost: '',
+            description: 'Infra estrutura de redes',
+            cost: '50/Gb',
         },
         {
             idJob: "63",
             name: "Suporte",
             isHire: false,
             dateHire: '',
-            description: '',
-            cost: '',
-        },
-        {
-            idJob: "47",
-            name: "Desenvolvimento",
-            isHire: true,
-            dateHire: '25/08/2025',
-            description: '',
-            cost: '',
-        },
+            description: 'Suporte para dispositivos',
+            cost: '50/dispositivo',
+        }
     ]
 
     router.get('/info', (require, response) => {
-        console.log(require.body);
-        response.end();
+        console.log(require);
+        const id = require.query.idJob;
+        console.log(require.query.token)
+        response.status(200).send(jobs[id]);
     });
 
     router.get('/all', (require, response) => {
