@@ -7,7 +7,7 @@ chatSuport = (io) => {
 
     //io.of("/suport").disconnectSockets();
     io.of("/suport").on("connection", (socket) => {
-
+        socket.join("001");
         //authentication(socket.handshake.auth, socket.id);
         //Change to handshake.query because version socket
         authentication(socket.handshake.query, socket.conn.id);
@@ -22,6 +22,7 @@ chatSuport = (io) => {
                     idUser: data.idUser,
                     codeEnterprise: data.codeEnterprise,
                     idCall: data.idCall,
+                    time: data.time,
                     message: data.message,
                     socketId: socket.id
                 }
@@ -30,6 +31,7 @@ chatSuport = (io) => {
                     type: Type.SUPORT,
                     idUser: data.idUser,
                     idCall: data.idCall,
+                    time: data.time,
                     message: data.message,
                     socketId: socket.id
                 }
