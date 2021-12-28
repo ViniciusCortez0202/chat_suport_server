@@ -1,10 +1,15 @@
 const Status = require('../../enums/statusCall')
+const SocketServer = require("../../servers/socketServer");
 
-calls = (router) => {
+calls = (router, ioMediator) => {
 
     router.post('/open', (require, response) => {
         console.log(require.body);
+        console.log(require.headers.socketid);
         
+        idCall = "001";//new Data().getMilliseconds();
+
+        ioMediator.joinRoom(require.headers.socketid, idCall);
         response.set('Location', `http://10.0.0.104/calls?callid=545&token=${require.body.token}`);
         response.status(201).end();
     });

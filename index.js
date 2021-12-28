@@ -2,14 +2,18 @@
 const express = require('express');
 const http = require('http');
 const io = require('socket.io');
+const IoMediator = require('./utils/IoMediator');
 
 //servers
 const httpServer = require("./servers/httpServer");
-const socketServer = require("./servers/socketServer");
+const SocketServer = require("./servers/socketServer");
+
+const ioMediator = new IoMediator();
 
 //create servers
-const serverConnection = httpServer.createServer(http, express);
-const socketConnection = socketServer.createSocket(io, serverConnection.server);
+const serverConnection = httpServer.createServer(http, express, ioMediator);
+const socketConnection = SocketServer.createSocket(io, serverConnection.server);
+ioMediator.setIo(socketConnection.connection);
 
 //socket suport chat
 const chat = require('./socketsSuportChat/socketConnection')(socketConnection.connection);

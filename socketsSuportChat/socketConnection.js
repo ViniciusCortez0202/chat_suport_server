@@ -6,15 +6,16 @@ chatSuport = (io) => {
     const controller = socketController(io);
 
     //io.of("/suport").disconnectSockets();
-    io.of("/suport").on("connection", (socket) => {
-        socket.join("001");
+    io.of("/suport").on("connection", (socket) => {        
         //authentication(socket.handshake.auth, socket.id);
         //Change to handshake.query because version socket
-        authentication(socket.handshake.query, socket.conn.id);
+        authentication(socket.handshake.query, socket.id);
+        
         //console.log(socket.conn.id)
         socket.on("message", (data) => {
 
             //const rooms = await io.of("/suport").in(data.idCall).fetchSockets();
+            
             let message;
             if (data.type == Type.ENTERPRISE.id) {
                 message = {

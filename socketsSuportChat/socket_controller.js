@@ -27,7 +27,7 @@ Controller = (io) => {
         //     mapSubjects.set(value.idCall, subject);
             
         // }
-
+        console.log(value)
         io.of('/suport').in(value.idCall).emit("message", value);
 
         Message.setMessages(value.idCall, value);

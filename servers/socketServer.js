@@ -1,6 +1,11 @@
-exports.createSocket = (io, server, options = {}) => {
+class SocketServer{
 
-    const connection = io(server, options);
+    static createSocket = (io, server, options = {}) => {
 
-    return { connection }
+        const connection = io(server, options);
+        
+        return { connection }
+    }
 }
+
+module.exports = SocketServer;
