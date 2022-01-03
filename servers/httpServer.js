@@ -1,4 +1,4 @@
-const RoutersManagement = require('../routers/router_management')
+require('../routers/router_management')
 exports.createServer = (http, express, ioMediator) => {
 
     const app = express();
@@ -6,7 +6,7 @@ exports.createServer = (http, express, ioMediator) => {
 
     const port = process.env.port || 3000;
 
-    server.listen(port, '10.0.0.105', () => {
+    server.listen(port, '10.0.0.106', () => {
         console.log("CONNECTION OPEN " + port);
     });
     
