@@ -1,0 +1,18 @@
+POST http://10.0.0.100:3000/sing/login
+Content-Type: application/json
+
+{
+    "email": "email@email.com",
+    "password": "senhateste"
+}
+
+###
+
+POST http://10.0.0.100:3000/sing/refresh
+Content-Type: application/json
+
+{
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWlsQGVtYWlsLmNvbSIsInBhc3N3b3JkIjoic2VuaGF0ZXN0ZSIsImlhdCI6MTY0MTM4NzcwMCwiZXhwIjoxNjQzOTc5NzAwfQ.BjrS6xxnr4KN1Z-VtfkM3_9Mdeo3aKfbLIacJ0aQhdQ",
+}
+
+###

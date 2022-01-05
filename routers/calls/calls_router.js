@@ -75,21 +75,20 @@ calls = (router, ioMediator) => {
     router.post('/open', (require, response) => {
         console.log(require.body);
         console.log(require.headers.socketid);
-        
-        idCall = "001";//new Data().getMilliseconds();
+
+        idCall = "001";
 
         ioMediator.joinRoom(require.headers.socketid, idCall);
         response.set('Location', `http://10.0.0.104/calls?callid=545&token=${require.body.token}`);
         response.status(201).end();
     });
 
-    router.get('/all', (require, response) => {
-        // new Auth().auth();
-        console.log(process.env.TOKEN_KEY)
-        // response.status(200).json(
-        //     value
-        // );
-        response.json({acess: process.env.TOKEN_KEY});
+    router.get('/all', (require, response, next) => {
+        response.status(200).json(
+            value
+        );
+        
+
     });
 
     router.patch('/close', (require, response) => {
