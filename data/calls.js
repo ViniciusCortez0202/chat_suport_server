@@ -12,6 +12,16 @@ class Calls{
         });
     }
 
+    insertCalls = (values) => {
+        const query = "INSERT INTO calls SET ?";
+        return new Promise((resolve, reject) => {
+            connection.query(query, values, (err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
+
 }
 
 module.exports = Calls;

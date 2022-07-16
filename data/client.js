@@ -12,6 +12,16 @@ class Client{
         });
     }
 
+    insertClient = (values) => {
+        const query = "INSERT INTO client SET ?";
+        return new Promise((resolve, reject) => {
+            connection.query(query, values, (err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
+
 }
 
 module.exports = Client;
