@@ -1,6 +1,6 @@
 const connection = require('./connection');
 
-class Client{
+class ClientData{
 
     selectClient = () => {
         const query = "SELECT * FROM client";
@@ -22,6 +22,16 @@ class Client{
         });
     }
 
+    selectClientId = (id) => {
+        const query = "SELECT * FROM client WHERE id = ?";
+        return new Promise((resolve, reject) => {
+            connection.query(query, id, (err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
+
 }
 
-module.exports = Client;
+module.exports = ClientData;
