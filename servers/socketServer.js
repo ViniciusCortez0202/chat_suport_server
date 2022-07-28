@@ -1,4 +1,4 @@
-class SocketServer{
+export class SocketServer{
 
     static createSocket = (io, server, options = {}) => {
 
@@ -7,5 +7,3 @@ class SocketServer{
         return { connection }
     }
 }
-
-module.exports = SocketServer;

@@ -1,7 +1,7 @@
-const Status = require('../../enums/statusCall')
-const Technician = require('../../data/technician')
+import Status from '../../enums/statusCall';
+import Technician from '../../data/technician';
 
-techniciansRouters = (router) => {
+export default techniciansRouters = (router) => {
 
     router.get('/all', async (require, response, next) => {
         const technician = new Technician();
@@ -15,5 +15,3 @@ techniciansRouters = (router) => {
 
     return router;
 }
-
-module.exports = techniciansRouters;

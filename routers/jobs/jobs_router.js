@@ -1,4 +1,4 @@
-jobs = (router) => {
+export default jobs = (router) => {
 
     jobs = [
         {
@@ -47,5 +47,3 @@ jobs = (router) => {
 
     return router;
 }
-
-module.exports = jobs;

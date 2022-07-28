@@ -1,5 +1,5 @@
-require('../routers/router_management')
-exports.createServer = (http, express, ioMediator) => {
+import '../routers/router_management';
+export default createServer = (http, express, ioMediator) => {
 
     const app = express();
     const server = http.createServer(app);

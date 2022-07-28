@@ -17,4 +17,4 @@ class RoomObserver{
         this.#io.of('/suport').in(this.#room).emit("message", messages.message);
     }
 }
-module.exports = RoomObserver;
+export default RoomObserver;

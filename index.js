@@ -1,18 +1,18 @@
 //libaries and frameorks
-const express = require('express');
-const http = require('http');
-const io = require('socket.io');
-const IoMediator = require('./utils/IoMediator');
+import express from 'express';
+import http from 'http';
+import io from 'socket.io';
+import IoMediator from './utils/IoMediator';
 
 //servers
-const httpServer = require("./servers/httpServer");
-const SocketServer = require("./servers/socketServer");
+import { createServer } from "./servers/httpServer";
+import { createSocket } from "./servers/socketServer";
 
 const ioMediator = new IoMediator();
 
 //create servers
-const serverConnection = httpServer.createServer(http, express, ioMediator);
-const socketConnection = SocketServer.createSocket(io, serverConnection.server);
+const serverConnection = createServer(http, express, ioMediator);
+const socketConnection = createSocket(io, serverConnection.server);
 ioMediator.setIo(socketConnection.connection);
 
 //socket suport chat

@@ -1,10 +1,10 @@
-const calls = require('./calls/calls_router')
-const jobs = require('./jobs/jobs_router');
-const sing = require('./sing/sing_router');
-const client = require('./client/client');
-const technician = require('./technician/technician');
+import calls from './calls/calls_router';
+import jobs from './jobs/jobs_router';
+import sing from './sing/sing_router';
+import client from './client/client';
+import technician from './technician/technician';
 
-routersManagement = (app, express, ioMediator) =>{
+export default routersManagement = (app, express, ioMediator) =>{
     
     app.use('/calls', calls(express.Router(), ioMediator));
     app.use('/jobs', jobs(express.Router()));
@@ -13,5 +13,3 @@ routersManagement = (app, express, ioMediator) =>{
     app.use('/technician', technician(express.Router()));
 
 }
-
-module.exports = routersManagement;

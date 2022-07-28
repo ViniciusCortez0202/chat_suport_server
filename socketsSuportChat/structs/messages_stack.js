@@ -1,4 +1,4 @@
-class MessagesStack{
+export class MessagesStack{
 
     #messages = [];
 
@@ -14,5 +14,3 @@ class MessagesStack{
         return this.#messages[this.#messages.lastIndexOf()];
     }
 }
-
-module.exports = MessagesStack;

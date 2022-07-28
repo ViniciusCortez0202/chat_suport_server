@@ -1,7 +1,7 @@
-const Status = require('../../enums/statusCall')
-const Calls = require('../../data/calls')
+import Status from '../../enums/statusCall';
+import Calls from '../../data/calls';
 
-callsRouters = (router, ioMediator) => {
+export default callsRouters = (router, ioMediator) => {
 
     router.post('/open', (require, response) => {
         console.log(require.body);
@@ -31,5 +31,3 @@ callsRouters = (router, ioMediator) => {
 
     return router;
 }
-
-module.exports = callsRouters;
