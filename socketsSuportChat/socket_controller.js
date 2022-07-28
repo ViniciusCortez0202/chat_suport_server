@@ -1,11 +1,11 @@
 const auth = require("./repositories/sokcetAuthRepository")();
-const Subject = require('./observer/subject')
-const RoomObserver = require('./observer/roomObeserver');
+import Subject from './observer/subject';
+import RoomObserver from './observer/roomObeserver';
 const Message = require('./repositories/socketMessageRepository')();
 
 // Guarda as salas abertas
 const mapSubjects = new Map();
-Controller = (io) => {
+export default Controller = (io) => {
 
     createAuthSocket = (value) => {
         auth.insertUserSocket(value);
@@ -35,5 +35,3 @@ Controller = (io) => {
 
     return { createAuthSocket, insertMessage, sendMessage }
 }
-
-module.exports = Controller;

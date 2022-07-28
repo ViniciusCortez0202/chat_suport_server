@@ -1,4 +1,4 @@
-class IoMediator{
+export class IoMediator{
 
     _io;
 
@@ -11,5 +11,3 @@ class IoMediator{
     }
 
 }
-
-module.exports = IoMediator;

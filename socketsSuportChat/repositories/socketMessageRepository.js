@@ -1,7 +1,7 @@
 const rooms = new Map();
 const MessagesStack = require('../structs/messages_stack');
 
-Messages = () => {
+export default Messages = () => {
     getAllMessages = (idCall) => {
         if(rooms.has(idCall)){
             const stack = rooms.get(idCall);
@@ -20,5 +20,3 @@ Messages = () => {
 
     return { getAllMessages, setMessages }
 }
-
-module.exports = Messages;

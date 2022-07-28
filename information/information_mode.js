@@ -1,4 +1,4 @@
-exports.Enterprise = (data, socket) => {
+export function Enterprise(data, socket) {
 
     var enterpriseInformation = {
         cnpj: data.cnpj,
@@ -13,7 +13,7 @@ exports.Enterprise = (data, socket) => {
 }
 
 
-exports.Suport = (data, socket) => {
+export function Suport(data, socket) {
 
     var suportInformation = {
         socket: socket,

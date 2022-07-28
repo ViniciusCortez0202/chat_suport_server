@@ -1,7 +1,7 @@
-const Type = require("../enums/typesChat");
-const socketController = require("./socket_controller");
+import { ENTERPRISE, SUPORT } from "../enums/typesChat";
+import socketController from "./socket_controller";
 
-chatSuport = (io) => {
+export default chatSuport = (io) => {
 
     const controller = socketController(io);
 
@@ -17,9 +17,9 @@ chatSuport = (io) => {
             //const rooms = await io.of("/suport").in(data.idCall).fetchSockets();
             
             let message;
-            if (data.type == Type.ENTERPRISE.id) {
+            if (data.type == ENTERPRISE.id) {
                 message = {
-                    type: Type.ENTERPRISE,
+                    type: ENTERPRISE,
                     idUser: data.idUser,
                     codeEnterprise: data.codeEnterprise,
                     idCall: data.idCall,
@@ -27,9 +27,9 @@ chatSuport = (io) => {
                     message: data.message,
                     socketId: socket.id
                 }
-            } else if (data.type == Type.SUPORT.id) {
+            } else if (data.type == SUPORT.id) {
                 message = {
-                    type: Type.SUPORT,
+                    type: SUPORT,
                     idUser: data.idUser,
                     idCall: data.idCall,
                     time: data.time,
@@ -67,16 +67,16 @@ chatSuport = (io) => {
 
     authentication = (auth, socketId) => {
         let model;
-            if (auth.type == Type.ENTERPRISE.id) {
+            if (auth.type == ENTERPRISE.id) {
                 model = {
-                    type: Type.ENTERPRISE,
+                    type: ENTERPRISE,
                     codeEnterprise: auth.codeEnterprise,
                     idUser: auth.idUser,
                     socketId: socketId
                 }
-            } else if (auth.type == Type.SUPORT.id) {
+            } else if (auth.type == SUPORT.id) {
                 model = {
-                    type: Type.SUPORT,
+                    type: SUPORT,
                     idUser: auth.idUser,
                     socketId: socketId
                 }
@@ -86,5 +86,3 @@ chatSuport = (io) => {
 
     return { io }
 }
-
-module.exports = chatSuport;

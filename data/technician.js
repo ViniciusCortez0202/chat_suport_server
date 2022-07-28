@@ -1,11 +1,11 @@
-const connection = require('./connection');
+import { query as _query } from './connection';
 
 class Technician{
 
     selectTechnician = () => {
         const query = "SELECT * FROM technician";
         return new Promise((resolve, reject) => {
-            connection.query(query, (err, result) => {
+            _query(query, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
@@ -15,7 +15,7 @@ class Technician{
     insertTechnician = (values) => {
         const query = "INSERT INTO technician SET ?";
         return new Promise((resolve, reject) => {
-            connection.query(query, values, (err, result) => {
+            _query(query, values, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
@@ -25,7 +25,7 @@ class Technician{
     insertCallToTechnician = (values) => {
         const query = "INSERT INTO technician_calls SET ?";
         return new Promise((resolve, reject) => {
-            connection.query(query, values, (err, result) => {
+            _query(query, values, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
@@ -34,4 +34,4 @@ class Technician{
 
 }
 
-module.exports = Technician;
+export default Technician;

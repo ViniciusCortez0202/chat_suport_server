@@ -1,4 +1,4 @@
-class Subject{
+export class Subject{
     #value = new Set();
     #observers;
 
@@ -26,5 +26,3 @@ class Subject{
         this.#observers.update(this.#value);
     }
 }
-
-module.exports = Subject;

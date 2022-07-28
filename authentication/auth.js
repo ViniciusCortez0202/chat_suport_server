@@ -1,7 +1,7 @@
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
+import { verify, sign } from 'jsonwebtoken';
 
-class Authentication {
+export class Authentication {
 
     data;
 
@@ -15,7 +15,7 @@ class Authentication {
         if (token == null) return response.sendStatus(401);
         console.log(process.env.TOKEN_KEY)
 
-        jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
+        verify(token, process.env.TOKEN_KEY, (err, user) => {
             if (err) return response.sendStatus(403);
             request.user = user;
             next();
@@ -23,10 +23,10 @@ class Authentication {
     }
 
     createToken = (user) => {
-        return jwt.sign(user, process.env.TOKEN_KEY, {expiresIn: '5s'});
+        return sign(user, process.env.TOKEN_KEY, {expiresIn: '5s'});
     }
     createRefreshToken = (user) => {
-        return jwt.sign(user, process.env.REFRESH_TOKEN_KEY, {expiresIn: '30d'});
+        return sign(user, process.env.REFRESH_TOKEN_KEY, {expiresIn: '30d'});
     }
 
     deleteRefreshToken = (refreshToken) => {
@@ -37,7 +37,7 @@ class Authentication {
         let refreshToken = request.body.refresh_token;
              
         if(this.data.refreshList.includes(refreshToken)){
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
+            verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
                 if (err) return response.sendStatus(403); 
                 console.log(user);               
                 return response.status(200).send({token: this.createToken({email: user.email})});
@@ -47,5 +47,3 @@ class Authentication {
         
     }
 }
-
-module.exports = Authentication;
