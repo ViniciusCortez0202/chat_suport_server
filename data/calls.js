@@ -1,11 +1,11 @@
-import { query as _query } from './connection';
+import connection from './connection.js';
 
-class Calls{
+class CallsData{
 
     selectCalls = () => {
         const query = "SELECT * FROM calls";
         return new Promise((resolve, reject) => {
-            _query(query, (err, result) => {
+            connection.query(query, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
@@ -15,7 +15,7 @@ class Calls{
     insertCalls = (values) => {
         const query = "INSERT INTO calls SET ?";
         return new Promise((resolve, reject) => {
-            _query(query, values, (err, result) => {
+            connection.query(query, values, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
@@ -24,4 +24,4 @@ class Calls{
 
 }
 
-export default Calls;
+export default CallsData

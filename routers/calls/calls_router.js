@@ -1,21 +1,33 @@
-import Status from '../../enums/statusCall';
-import Calls from '../../data/calls';
+// import Status from '../../enums/statusCall.js';
+import CallsData from '../../data/calls.js';
+import convertToFile from './../files/file_convert.js';
 
-export default callsRouters = (router, ioMediator) => {
+const callsRouters = (router, ioMediator) => {
 
-    router.post('/open', (require, response) => {
-        console.log(require.body);
-        console.log(require.headers.socketid);
+    router.post('/open', convertToFile, async (require, response) => {
+     
+        const title = require.body.title;
+        const body = require.body.body;
+        const user = require.body.user_id;
+        const files = require.body.files;
 
-        idCall = "001";
+        const calls = new CallsData();
 
-        ioMediator.joinRoom(require.headers.socketid, idCall);
-        response.set('Location', `http://10.0.0.104/calls?callid=545&token=${require.body.token}`);
-        response.status(201).end();
+        try {
+            const result = await calls.insertCalls({title: title, body: body, user_id: user});
+            //ioMediator.joinRoom(require.headers.socketid, idCall);   
+            console.log(result) 
+            response.status(201).send(result);
+        } catch (error) {
+            console.log(error)
+            response.status(400).send("Não foi possível abrir o chamado.");
+        }
+
+       
     });
 
-    router.get('/all', async (require, response, next) => {
-        const calls = new Calls();
+    router.get('/all/:status', async (require, response, next) => {
+        const calls = new CallsData();
         try {
             result = await calls.selectCalls();
             response.status(200).send(result);
@@ -31,3 +43,5 @@ export default callsRouters = (router, ioMediator) => {
 
     return router;
 }
+
+export default callsRouters;

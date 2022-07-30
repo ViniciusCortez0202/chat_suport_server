@@ -1,11 +1,11 @@
-import { query as _query } from './connection';
+import connection from './connection.js';
 
 class Technician{
 
     selectTechnician = () => {
         const query = "SELECT * FROM technician";
         return new Promise((resolve, reject) => {
-            _query(query, (err, result) => {
+            connection.query(query, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })

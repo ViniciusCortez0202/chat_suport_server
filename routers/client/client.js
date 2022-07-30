@@ -1,7 +1,7 @@
-import Status from '../../enums/statusCall';
-import Client from '../../data/client';
+// import Status from '../../enums/statusCall.js';
+import Client from '../../data/client.js';
 
-export default clientsRouters = (router) => {
+const clientsRouters = (router) => {
 
     router.get('/all', async (require, response, next) => {
         const client = new Client();
@@ -17,3 +17,5 @@ export default clientsRouters = (router) => {
 
     return router;
 }
+
+export default clientsRouters;
