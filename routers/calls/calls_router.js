@@ -1,6 +1,8 @@
 // import Status from '../../enums/statusCall.js';
 import CallsData from '../../data/calls.js';
 import convertToFile from './../files/file_convert.js';
+import connection from './../../data/connection.js';
+import FilesData from './../../data/files.js';
 
 const callsRouters = (router, ioMediator) => {
 
@@ -9,20 +11,22 @@ const callsRouters = (router, ioMediator) => {
         const title = require.body.title;
         const body = require.body.body;
         const user = require.body.user_id;
-        const files = require.body.files;
+        const files = response.locals.files;
 
-        const calls = new CallsData();
+        const calls = new CallsData(connection);
+        const filesData = new FilesData(connection);
 
         try {
+            const resultFiles = await filesData.insertFiles(files);
+            console.log(resultFiles)
             const result = await calls.insertCalls({title: title, body: body, user_id: user});
-            //ioMediator.joinRoom(require.headers.socketid, idCall);   
-            console.log(result) 
             response.status(201).send(result);
         } catch (error) {
             console.log(error)
             response.status(400).send("Não foi possível abrir o chamado.");
         }
-
+        
+        //ioMediator.joinRoom(require.headers.socketid, idCall);   
        
     });
 
