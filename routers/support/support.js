@@ -1,12 +1,12 @@
 // import Status from '../../enums/statusCall.js';
-import Technician from '../../data/technician.js';
+import Support from '../../data/support.js';
 
-const techniciansRouters = (router) => {
+const supportRouters = (router) => {
 
     router.get('/all', async (require, response, next) => {
-        const technician = new Technician();
+        const support = new Support();
         try {
-            result = await technician.selectTechnician();
+            result = await support.selectSupport();
             response.status(200).send(result);
         } catch (error) {
             response.status(404).send("Not found");
@@ -16,4 +16,4 @@ const techniciansRouters = (router) => {
     return router;
 }
 
-export default techniciansRouters;
+export default supportRouters;

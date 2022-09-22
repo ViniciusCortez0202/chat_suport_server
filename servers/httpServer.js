@@ -6,7 +6,7 @@ const createServer = (http, express, ioMediator) => {
 
     const port = process.env.port || 3000;
 
-    server.listen(port, '192.168.0.107', () => {
+    server.listen(port, () => {
         console.log("CONNECTION OPEN " + port);
     });
     

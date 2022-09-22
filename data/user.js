@@ -1,9 +1,9 @@
 import connection from './connection.js';
 
-class Technician{
+class UserData{
 
-    selectTechnician = () => {
-        const query = "SELECT * FROM technician";
+    selectUser = () => {
+        const query = "SELECT * FROM user";
         return new Promise((resolve, reject) => {
             connection.query(query, (err, result) => {
                 if(err) return reject(err);
@@ -12,20 +12,20 @@ class Technician{
         });
     }
 
-    insertTechnician = (values) => {
-        const query = "INSERT INTO technician SET ?";
+    insertUser = (values) => {
+        const query = "INSERT INTO user SET ?";
         return new Promise((resolve, reject) => {
-            _query(query, values, (err, result) => {
+            connection.query(query, values, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
         });
     }
 
-    insertCallToTechnician = (values) => {
-        const query = "INSERT INTO technician_calls SET ?";
+    selectUserId = (id) => {
+        const query = "SELECT * FROM user WHERE id = ?";
         return new Promise((resolve, reject) => {
-            _query(query, values, (err, result) => {
+            connection.query(query, id, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
@@ -34,4 +34,4 @@ class Technician{
 
 }
 
-export default Technician;
+export default UserData;

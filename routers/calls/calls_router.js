@@ -18,8 +18,8 @@ const callsRouters = (router, ioMediator) => {
 
         try {
             const resultFiles = await filesData.insertFiles(files);
-            console.log(resultFiles)
             const result = await calls.insertCalls({title: title, body: body, user_id: user});
+            await calls.insertCallsFiles(result.insertId, resultFiles.insertId, resultFiles.affectedRows);
             response.status(201).send(result);
         } catch (error) {
             console.log(error)
