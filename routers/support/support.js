@@ -1,21 +1,19 @@
 // import Status from '../../enums/statusCall.js';
-import Client from '../../data/client.js';
+import Support from '../../data/support.js';
 
-const clientsRouters = (router) => {
+const supportRouters = (router) => {
 
     router.get('/all', async (require, response, next) => {
-        const client = new Client();
+        const support = new Support();
         try {
-            result = await client.selectClient();
+            result = await support.selectSupport();
             response.status(200).send(result);
         } catch (error) {
             response.status(404).send("Not found");
         }
     });
 
-   
-
     return router;
 }
 
-export default clientsRouters;
+export default supportRouters;

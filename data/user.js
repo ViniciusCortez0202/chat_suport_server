@@ -1,9 +1,9 @@
 import connection from './connection.js';
 
-class ClientData{
+class UserData{
 
-    selectClient = () => {
-        const query = "SELECT * FROM client";
+    selectUser = () => {
+        const query = "SELECT * FROM user";
         return new Promise((resolve, reject) => {
             connection.query(query, (err, result) => {
                 if(err) return reject(err);
@@ -12,8 +12,8 @@ class ClientData{
         });
     }
 
-    insertClient = (values) => {
-        const query = "INSERT INTO client SET ?";
+    insertUser = (values) => {
+        const query = "INSERT INTO user SET ?";
         return new Promise((resolve, reject) => {
             connection.query(query, values, (err, result) => {
                 if(err) return reject(err);
@@ -22,8 +22,8 @@ class ClientData{
         });
     }
 
-    selectClientId = (id) => {
-        const query = "SELECT * FROM client WHERE id = ?";
+    selectUserId = (id) => {
+        const query = "SELECT * FROM user WHERE id = ?";
         return new Promise((resolve, reject) => {
             connection.query(query, id, (err, result) => {
                 if(err) return reject(err);
@@ -34,4 +34,4 @@ class ClientData{
 
 }
 
-export default ClientData;
+export default UserData;

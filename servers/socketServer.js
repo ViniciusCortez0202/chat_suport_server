@@ -1,9 +1,8 @@
-export class SocketServer{
+const createSocket = (io, server, options = {}) => {
 
-    static createSocket = (io, server, options = {}) => {
+    const connection = io(server, options);
 
-        const connection = io(server, options);
-        
-        return { connection }
-    }
+    return { connection }
 }
+
+export default createSocket;

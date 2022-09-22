@@ -1,4 +1,4 @@
-export class IoMediator{
+class IoMediator{
 
     _io;
 
@@ -11,3 +11,5 @@ export class IoMediator{
     }
 
 }
+
+export default IoMediator;

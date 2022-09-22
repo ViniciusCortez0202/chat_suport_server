@@ -1,19 +1,19 @@
-import { query as _query } from './connection';
+import connection from './connection.js';
 
-class Technician{
+class Support{
 
-    selectTechnician = () => {
-        const query = "SELECT * FROM technician";
+    selectSupport = () => {
+        const query = "SELECT * FROM support";
         return new Promise((resolve, reject) => {
-            _query(query, (err, result) => {
+            connection.query(query, (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
         });
     }
 
-    insertTechnician = (values) => {
-        const query = "INSERT INTO technician SET ?";
+    insertSupport = (values) => {
+        const query = "INSERT INTO support SET ?";
         return new Promise((resolve, reject) => {
             _query(query, values, (err, result) => {
                 if(err) return reject(err);
@@ -22,8 +22,8 @@ class Technician{
         });
     }
 
-    insertCallToTechnician = (values) => {
-        const query = "INSERT INTO technician_calls SET ?";
+    insertCallToSupport = (values) => {
+        const query = "INSERT INTO support_calls SET ?";
         return new Promise((resolve, reject) => {
             _query(query, values, (err, result) => {
                 if(err) return reject(err);
@@ -34,4 +34,4 @@ class Technician{
 
 }
 
-export default Technician;
+export default Support;
