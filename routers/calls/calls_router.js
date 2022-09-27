@@ -1,33 +1,27 @@
-// import Status from '../../enums/statusCall.js';
 import CallsData from '../../data/calls.js';
 import convertToFile from './../files/file_convert.js';
 import connection from './../../data/connection.js';
 import FilesData from './../../data/files.js';
+import transaction from '../../data/util/transaction.js';
 
 const callsRouters = (router, ioMediator) => {
 
     router.post('/open', convertToFile, async (require, response) => {
-     
+
         const title = require.body.title;
         const body = require.body.body;
         const user = require.body.user_id;
         const files = response.locals.files;
 
-        const calls = new CallsData(connection);
-        const filesData = new FilesData(connection);
+
 
         try {
-            const resultFiles = await filesData.insertFiles(files);
-            const result = await calls.insertCalls({title: title, body: body, user_id: user});
-            await calls.insertCallsFiles(result.insertId, resultFiles.insertId, resultFiles.affectedRows);
-            response.status(201).send(result);
+            await transaction({ title: title, body: body, user: user, files: files }, _createCall)
+            response.status(201).send("Chamado criado. Atenderemos assim que possível");
         } catch (error) {
             console.log(error)
             response.status(400).send("Não foi possível abrir o chamado.");
         }
-        
-        //ioMediator.joinRoom(require.headers.socketid, idCall);   
-       
     });
 
     router.get('/all/:status', async (require, response, next) => {
@@ -46,6 +40,19 @@ const callsRouters = (router, ioMediator) => {
 
 
     return router;
+}
+
+const _createCall = async ({ title, body, user, files }) => {
+    const calls = new CallsData(connection);
+    const filesData = new FilesData(connection);
+
+    try {
+        const resultFiles = await filesData.insertFiles(files);
+        const resultCall = await calls.insertCalls({ title: title, body: body, user_id: user });
+        await calls.insertCallsFiles(resultCall.insertId, resultFiles.insertId, resultFiles.affectedRows);
+    } catch (error) {
+        throw error;
+    }
 }
 
 export default callsRouters;
