@@ -12,7 +12,28 @@ class UserData{
         });
     }
 
-    insertUser = (values) => {
+    selectById = (id) => {
+        const query = "SELECT name FROM user WHERE id = ?";
+        return new Promise((resolve, reject) => {
+            connection.query(query, [id], (err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
+
+
+    login = (name, password) => {
+        const query = "SELECT * FROM user WHERE name = ? password = ?";
+        return new Promise((resolve, reject) => {
+            connection.query(query, [name, password] ,(err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
+
+    insert = (values) => {
         const query = "INSERT INTO user SET ?";
         return new Promise((resolve, reject) => {
             connection.query(query, values, (err, result) => {

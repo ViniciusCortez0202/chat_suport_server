@@ -1,6 +1,6 @@
 import connection from './connection.js';
 
-class Support{
+class SupportData{
 
     selectSupport = () => {
         const query = "SELECT * FROM support";
@@ -11,8 +11,27 @@ class Support{
             })
         });
     }
+    selectById = (id) => {
+        const query = "SELECT name FROM support WHERE id = ?";
+        return new Promise((resolve, reject) => {
+            connection.query(query, [id], (err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
 
-    insertSupport = (values) => {
+    login = (name, password) => {
+        const query = "SELECT * FROM support WHERE name = ? password = ?";
+        return new Promise((resolve, reject) => {
+            connection.query(query, [name, password], (err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
+
+    insert = (values) => {
         const query = "INSERT INTO support SET ?";
         return new Promise((resolve, reject) => {
             _query(query, values, (err, result) => {
@@ -34,4 +53,4 @@ class Support{
 
 }
 
-export default Support;
+export default SupportData;

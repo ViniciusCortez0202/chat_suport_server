@@ -1,7 +1,8 @@
-require('dotenv').config();
-import { verify, sign } from 'jsonwebtoken';
+import * as env from 'dotenv';
+env.config();
+import jwt from 'jsonwebtoken';
 
-export class Authentication {
+class Authentication {
 
     data;
 
@@ -15,7 +16,7 @@ export class Authentication {
         if (token == null) return response.sendStatus(401);
         console.log(process.env.TOKEN_KEY)
 
-        verify(token, process.env.TOKEN_KEY, (err, user) => {
+        jwt.verify(token, process.env.TOKEN_KEY, (err, user) => {
             if (err) return response.sendStatus(403);
             request.user = user;
             next();
@@ -23,21 +24,21 @@ export class Authentication {
     }
 
     createToken = (user) => {
-        return sign(user, process.env.TOKEN_KEY, {expiresIn: '5s'});
+        return jwt.sign(user, process.env.TOKEN_KEY, {expiresIn: '5s'});
     }
     createRefreshToken = (user) => {
-        return sign(user, process.env.REFRESH_TOKEN_KEY, {expiresIn: '30d'});
+        return jwt.sign(user, process.env.REFRESH_TOKEN_KEY, {expiresIn: '30d'});
     }
 
     deleteRefreshToken = (refreshToken) => {
-        
+        this.data.refreshList = this.data.refreshList.filter((element) => element != refreshToken);
     }
 
     refresh = (request, response, next) => {
         let refreshToken = request.body.refresh_token;
              
         if(this.data.refreshList.includes(refreshToken)){
-            verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, user) => {
                 if (err) return response.sendStatus(403); 
                 console.log(user);               
                 return response.status(200).send({token: this.createToken({email: user.email})});
@@ -47,3 +48,5 @@ export class Authentication {
         
     }
 }
+
+export default Authentication;
