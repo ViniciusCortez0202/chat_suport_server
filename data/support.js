@@ -22,7 +22,7 @@ class SupportData{
     }
 
     login = (name, password) => {
-        const query = "SELECT * FROM support WHERE name = ? password = ?";
+        const query = "SELECT * FROM support WHERE name = ? and password = ?";
         return new Promise((resolve, reject) => {
             connection.query(query, [name, password], (err, result) => {
                 if(err) return reject(err);

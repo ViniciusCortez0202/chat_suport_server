@@ -1,30 +1,27 @@
 import Authentication from "../../authentication/auth.js"
-import transaction from "../../data/util/transaction.js";
 import UserData from './../../data/user.js';
+import connection from './../../data/connection.js';
 
 const userAuthRouters = (router) => {
 
     const auth = new Authentication([]);
 
     router.post('/login', async (request, response) => {
-
-
-        const userData = new UserData();
-        const name = request.body.password;
+        const userData = new UserData(connection);
+        const name = request.body.name;
         const password = request.body.password;
-
         try {
             const result = await userData.login(name, password);
+            if(result.length === null) {
+                response.status(404).send({message: "Usuário não encontrado"});
+            }
             const token = auth.createToken(result);
             const refreshToken = auth.createRefreshToken(result);
-
-            response.append('token', token);
-            response.append('refreshToken', refreshToken);
-            response.status(200).send(result);
-        } catch (error) {
-            response.status(404).send("Usuário não encontrado")
+            response.status(200).send({token: token, refresh_token: refreshToken});
+        } catch (error) {           
+            response.status(404).send("Usuário não encontrado");
         }
-    })
+    });
 
     router.get('/logout', (request, response) => {
 
@@ -34,9 +31,10 @@ const userAuthRouters = (router) => {
 
 
         response.status(200).send();
-    })
+    });
+
     router.post('/signup', async (request, response) => {
-        const userData = new UserData();
+        const userData = new UserData(connection);
         try {
 
             const result = await userData.insert(user);
@@ -52,11 +50,14 @@ const userAuthRouters = (router) => {
         } catch (error) {
             response.status(400).send("Não foi possível criar usuário!");
         }
-    })
-    router.post('/refresh', [auth.createToken], (request, response) => {
+    });
 
+    router.get('/refresh', (request, response) => {
 
-    })
+        response.status(200).send("ok");
+    });
+
+    return router;
 }
 
 export default userAuthRouters;

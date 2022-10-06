@@ -13,8 +13,6 @@ const callsRouters = (router, ioMediator) => {
         const user = require.body.user_id;
         const files = response.locals.files;
 
-
-
         try {
             await transaction({ title: title, body: body, user: user, files: files }, _createCall)
             response.status(201).send("Chamado criado. Atenderemos assim que possível");
@@ -24,10 +22,10 @@ const callsRouters = (router, ioMediator) => {
         }
     });
 
-    router.get('/all/:status', async (require, response, next) => {
-        const calls = new CallsData();
+    router.get('/all/:status?', async (require, response) => {
+        const calls = new CallsData(connection);
         try {
-            result = await calls.selectCalls();
+            const result = await calls.selectCalls();
             response.status(200).send(result);
         } catch (error) {
             response.status(404).send("Not found");

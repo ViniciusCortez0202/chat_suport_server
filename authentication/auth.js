@@ -24,10 +24,10 @@ class Authentication {
     }
 
     createToken = (user) => {
-        return jwt.sign(user, process.env.TOKEN_KEY, {expiresIn: '5s'});
+        return jwt.sign({id: user.id}, process.env.TOKEN_KEY, {expiresIn: '1h'});
     }
     createRefreshToken = (user) => {
-        return jwt.sign(user, process.env.REFRESH_TOKEN_KEY, {expiresIn: '30d'});
+        return jwt.sign({id: user.id}, process.env.REFRESH_TOKEN_KEY, {expiresIn: '30d'});
     }
 
     deleteRefreshToken = (refreshToken) => {
