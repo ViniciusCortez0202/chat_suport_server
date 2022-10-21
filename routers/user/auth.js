@@ -11,37 +11,46 @@ const userAuthRouters = (router) => {
         const name = request.body.name;
         const password = request.body.password;
         try {
-            const result = await userData.login(name, password);
-            if(result.length === null) {
-                response.status(404).send({message: "Usuário não encontrado"});
+            const result = (await userData.login(name, password))[0];
+            if (result.length === null) {
+                response.status(404).send({ message: "Usuário não encontrado" });
             }
             const token = auth.createToken(result);
-            const refreshToken = auth.createRefreshToken(result);
-            response.status(200).send({token: token, refresh_token: refreshToken});
-        } catch (error) {           
+            const refreshToken = await auth.createRefreshToken(result);
+            response.status(200).send({ token: token, refresh_token: refreshToken });
+        } catch (error) {
             response.status(404).send("Usuário não encontrado");
         }
     });
 
-    router.get('/logout', (request, response) => {
+    router.get('/logout', async (request, response) => {
 
-        const refreshToken = request.body.refreshToken;
+        const refreshToken = request.body.refresh_token;
 
-        auth.deleteRefreshToken(refreshToken);
+        try {
+            await auth.deleteRefreshToken(refreshToken);
+            response.status(200).send();
 
-
-        response.status(200).send();
+        } catch (error) {
+            response.status(401).send({ message: "Usuário inválido" });
+        }
     });
 
     router.post('/signup', async (request, response) => {
         const userData = new UserData(connection);
         try {
 
+            const user = {
+                name: request.body.name,
+                password: request.body.password,
+                department_id: request.body.department_id,
+            }
+
             const result = await userData.insert(user);
             const resultUser = await userData.selectById(result.insertId);
 
             const token = auth.createToken(resultUser);
-            const refreshToken = auth.createRefreshToken(resultUser);
+            const refreshToken = await auth.createRefreshToken(resultUser);
 
             response.append('token', token);
             response.append('refreshToken', refreshToken);
@@ -52,9 +61,12 @@ const userAuthRouters = (router) => {
         }
     });
 
-    router.get('/refresh', (request, response) => {
 
-        response.status(200).send("ok");
+    router.get('/refresh', auth.updateTokenWayRefresh, async (request, response) => {
+
+        const token = response.locals.token;
+
+        response.status(200).send({ token: token });
     });
 
     return router;

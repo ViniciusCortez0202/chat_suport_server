@@ -46,11 +46,19 @@ class UserData{
             })
         });
     }
-
-    selectUserId = (id) => {
-        const query = "SELECT * FROM user WHERE id = ?";
+    updateRefreshTokenId = (value, id) => {
+        const query = "UPDATE user SET uuid = ? WHERE id = ?";
         return new Promise((resolve, reject) => {
-            this.connection.query(query, id, (err, result) => {
+            this.connection.query(query, [value, id], (err, result) => {
+                if(err) return reject(err);
+                return resolve(result);
+            })
+        });
+    }
+    selectRefreshTokenId = (value) => {
+        const query = "SELECT uuid FROM USER WHERE id = ?";
+        return new Promise((resolve, reject) => {
+            this.connection.query(query, [value], (err, result) => {
                 if(err) return reject(err);
                 return resolve(result);
             })
