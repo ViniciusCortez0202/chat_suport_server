@@ -4,10 +4,10 @@ import connection from './../../data/connection.js';
 
 const userAuthRouters = (router) => {
 
-    const auth = new Authentication([]);
+    const userData = new UserData(connection);
+    const auth = new Authentication(userData);
 
     router.post('/login', async (request, response) => {
-        const userData = new UserData(connection);
         const name = request.body.name;
         const password = request.body.password;
         try {
@@ -37,7 +37,6 @@ const userAuthRouters = (router) => {
     });
 
     router.post('/signup', async (request, response) => {
-        const userData = new UserData(connection);
         try {
 
             const user = {

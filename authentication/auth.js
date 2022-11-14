@@ -2,11 +2,16 @@ import * as env from 'dotenv';
 env.config();
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import UserData from './../data/user.js'
-import connection from './../data/connection.js';
 import { promisify } from 'util';
 
 class Authentication {
+
+    user;
+
+    constructor(userAuth){
+        this.user = userAuth
+    }
+
 
     auth = async (request, response, next) => {
         const authorization = request.heard['authorization'];
@@ -31,27 +36,25 @@ class Authentication {
         }
     }
 
-    createToken = (user) => {
-        return jwt.sign({ id: user.id }, process.env.TOKEN_KEY, { expiresIn: '1h' });
+    createToken = (userValue) => {
+        return jwt.sign({ id: userValue.id }, process.env.TOKEN_KEY, { expiresIn: '1h' });
     }
     
-    createRefreshToken = async (user) => {
-        const uuid = await this._createUuidRefreshToken(user.id);
-        return jwt.sign({ id: user.id, uuid: uuid }, process.env.REFRESH_TOKEN_KEY, { expiresIn: '30d' });
+    createRefreshToken = async (userValue) => {
+        const uuid = await this._createUuidRefreshToken(userValue.id);
+        return jwt.sign({ id: userValue.id, uuid: uuid }, process.env.REFRESH_TOKEN_KEY, { expiresIn: '30d' });
     }
 
     _createUuidRefreshToken = async (userId) => {
         const uuid = uuidv4();
-        const userData = new UserData(connection)
-        userData.updateRefreshTokenId(uuid, userId)
+        await this.user.updateRefreshTokenId(uuid, userId)
         return uuid;
     }
 
     deleteRefreshToken = async (refreshToken) => {
         try {
             const payload = await this._verifyTokens(refreshToken, process.env.REFRESH_TOKEN_KEY);
-            const userData = new UserData(connection);
-            await userData.updateRefreshTokenId('', payload.id)
+            await this.user.updateRefreshTokenId(" ", payload.id)
         } catch (error) {
             throw error;
         }
@@ -59,8 +62,7 @@ class Authentication {
 
     _getValidUuidFromUser = async (userId) => {
         try {
-            const userData = new UserData(connection);
-            const validUuid = await userData.selectRefreshTokenId(userId);
+            const validUuid = await this.user.selectRefreshTokenId(userId);
             return validUuid;
         } catch (error) {
             throw error;
@@ -71,7 +73,7 @@ class Authentication {
 
         try {
             const payload = await this._verifyTokens(refreshToken, process.env.REFRESH_TOKEN_KEY)
-            const validUuid = await this._getValidUuidFromUser(payload.id);
+            const validUuid = await this._getValidUuidFromUser(payload.id);            
             if (validUuid[0].uuid === payload.uuid) {
                 return true;
             }
@@ -87,8 +89,8 @@ class Authentication {
         try {
             const verifiedRefreshToken = await this._verifyRefreshToken(refreshToken);
             if (verifiedRefreshToken) {
-                const user = (await this._verifyTokens(refreshToken, process.env.REFRESH_TOKEN_KEY)).id;
-                response.locals.token = this.createToken({ id: user.id });
+                const userId = (await this._verifyTokens(refreshToken, process.env.REFRESH_TOKEN_KEY)).id;
+                response.locals.token = this.createToken({ id: userId });
                 next();
             } else {
                 return response.status(401).send({ message: "Usuário inválido" });

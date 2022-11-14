@@ -1,12 +1,15 @@
-class UserData{
+import UserInterfaceData from "./util/user_interface.js";
+
+class UserData extends UserInterfaceData{
 
     connection;
 
     constructor(connection){
+        super()
         this.connection = connection;
     }
 
-    selectUser = () => {
+    select = () => {
         const query = "SELECT * FROM user";
         return new Promise((resolve, reject) => {
             this.connection.query(query, (err, result) => {

@@ -11,7 +11,7 @@ const routersManagement = (app, express) =>{
     app.use('/jobs', jobs(express.Router()));
     app.use('/client', client(express.Router()));
     app.use('/support', support(express.Router()));
-    // app.use('/support/auth', supportAuth(express.Router()));
+    app.use('/support/auth', supportAuth(express.Router()));
     app.use('/user/auth', userAuth(express.Router()));
 }
 
