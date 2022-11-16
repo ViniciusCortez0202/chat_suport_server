@@ -1,4 +1,4 @@
-class Departament{
+class DepartamentData{
 
     connection;
     constructor(connection) {
@@ -25,8 +25,8 @@ class Departament{
         });
     }
 
-    selectClientById = (id) => {
-        const query = "SELECT * FROM departament WHERE id = ?";
+    selectDepartamentById = (id) => {
+        const query = "SELECT * FROM departament WHERE departament_id = ?";
         return new Promise((resolve, reject) => {
             this.connection.query(query, id, (err, result) => {
                 if(err) return reject(err);
@@ -37,4 +37,4 @@ class Departament{
 
 }
 
-export default Departament;
+export default DepartamentData;

@@ -1,12 +1,14 @@
 // import Status from '../../enums/statusCall.js';
+import Authentication from '../../authentication/auth.js';
 import connection from '../../data/connection.js';
 import ClientData from './../../data/client.js';
 
 const clientsRouters = (router) => {
     
     const client = new ClientData(connection);
+    const auth = new Authentication();
 
-    router.get('/:id?', async (request, response, next) => {
+    router.get('/:id?', auth.auth, async (request, response, next) => {
         try {
             const id = request.params.id;
             let data;
@@ -19,12 +21,11 @@ const clientsRouters = (router) => {
             
             response.status(200).send(data);
         } catch (error) {
-            console.log(error)
             response.status(404).send("Not found");
         }
     });
 
-    router.post("/add", async (request, response) => {
+    router.post("/add", auth.auth, async (request, response) => {
         try {
 
             const data = {
