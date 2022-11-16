@@ -7,14 +7,14 @@ import { promisify } from 'util';
 class Authentication {
 
     user;
-
+    //tipo de usuário que será autenticado (Support, User)
     constructor(userAuth){
         this.user = userAuth
     }
 
 
     auth = async (request, response, next) => {
-        const authorization = request.heard['authorization'];
+        const authorization = request.headers['authorization'];
         const token = authorization && authorization.split(' ')[1];
         if (token === null) return response.status(401).send({ message: "Usuário inválido" });
 
